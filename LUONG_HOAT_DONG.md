@@ -192,25 +192,6 @@
 
 ---
 
-## 7. LUỒNG QUẢN LÝ BOOKING - XUẤT EXCEL ĐIỂM DANH
-
-| **ADMIN** | **HỆ THỐNG** |
-|-----------|--------------|
-| **Bắt đầu** | |
-| Vào trang chi tiết booking | |
-| Chọn tab "Điểm danh" | |
-| Nhấn nút "Xuất Excel" | |
-| | Lấy danh sách khách từ `booking_khach` theo `booking_id` |
-| | Lấy thông tin điểm danh từ `diem_danh_khach` |
-| | Tạo file Excel bằng PHPSpreadsheet: |
-| | - Header: STT, Họ tên, Giới tính, Năm sinh, Số giấy tờ, Trạng thái điểm danh |
-| | - Dữ liệu: Mỗi khách một dòng với thông tin tương ứng |
-| | Trả về file Excel để download |
-| File Excel được tải về máy | |
-| **Kết thúc** | |
-
----
-
 ## 8. LUỒNG HDV - XEM DANH SÁCH BOOKING
 
 | **HDV** | **HỆ THỐNG** |
@@ -439,3 +420,4 @@
 - Hệ thống luôn kiểm tra quyền và validate dữ liệu trước khi xử lý
 - Có các điểm quyết định rõ ràng để xử lý các trường hợp thành công/thất bại
 - Luồng có thể quay lại (loop) khi có lỗi validation
+
