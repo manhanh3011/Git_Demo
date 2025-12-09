@@ -7,17 +7,23 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Truy cập trang đăng nhập | |
-| 2. Nhập email và mật khẩu | |
-| 3. Nhấn nút "Đăng nhập" | 4. Nhận dữ liệu từ form POST |
-| | 5. Validate: Kiểm tra email và mật khẩu không rỗng |
-| | 6. **Nếu có lỗi** → Hiển thị form với thông báo lỗi → Quay lại bước 2 |
-| | 7. **Nếu hợp lệ** → Gọi `User::authenticate()` để kiểm tra trong database |
-| | 8. **Nếu sai** → Hiển thị lỗi "Email hoặc mật khẩu không đúng" → Quay lại bước 2 |
-| | 9. **Nếu đúng** → Lưu thông tin user vào session |
-| | 10. Kiểm tra phân quyền (admin/hdv) |
-| | 11. Redirect về trang home tương ứng |
-| 12. Thấy trang home | |
+| **Bắt đầu** | |
+| Truy cập trang đăng nhập | |
+| | Hiển thị giao diện trang đăng nhập |
+| Nhập email và mật khẩu | |
+| Nhấn nút "Đăng nhập" | |
+| | Nhận dữ liệu từ form POST |
+| | Validate: Kiểm tra email và mật khẩu không rỗng |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với thông báo lỗi |
+| | **Nếu hợp lệ** → Gọi `User::authenticate()` để kiểm tra trong database |
+| | **Điểm quyết định: Đăng nhập thành công?** |
+| | **Nếu thất bại** → Hiển thị lỗi "Email hoặc mật khẩu không đúng" |
+| | **Nếu thành công** → Lưu thông tin user vào session |
+| | Kiểm tra phân quyền (admin/hdv) |
+| | Redirect về trang home tương ứng |
+| Thấy trang home | |
+| **Kết thúc** | |
 
 ---
 
@@ -25,20 +31,23 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào menu "Quản lý Tour" → "Thêm tour mới" | |
-| 2. Hệ thống hiển thị form tạo tour | 2. Kiểm tra quyền Admin |
-| | 3. Lấy danh sách danh mục từ database |
-| | 4. Hiển thị form với danh sách danh mục |
-| 3. Điền thông tin: Tên tour, Danh mục, Mô tả, Giá, Trạng thái | |
-| 4. Thêm chính sách (có thể nhiều): Tên chính sách + Nội dung | |
-| 5. Thêm lịch trình (có thể nhiều): Số ngày + Điểm tham quan + Hoạt động | |
-| 6. Thêm nhà cung cấp (có thể nhiều): Tên + Loại + Liên hệ + Ghi chú | |
-| 7. Upload ảnh tour chính | |
-| 8. Upload ảnh chi tiết (có thể nhiều) | |
-| 9. Nhấn nút "Lưu" | 10. Nhận dữ liệu POST |
-| | 11. Validate: Kiểm tra tên tour, danh mục, mô tả, giá > 0 |
-| | 12. **Nếu có lỗi** → Hiển thị form với lỗi và dữ liệu cũ → Quay lại bước 3 |
-| | 13. **Nếu hợp lệ**: |
+| **Bắt đầu** | |
+| Vào menu "Quản lý Tour" → "Thêm tour mới" | |
+| | Kiểm tra quyền Admin |
+| | Lấy danh sách danh mục từ database |
+| | Hiển thị form tạo tour với danh sách danh mục |
+| Điền thông tin: Tên tour, Danh mục, Mô tả, Giá, Trạng thái | |
+| Thêm chính sách (có thể nhiều): Tên chính sách + Nội dung | |
+| Thêm lịch trình (có thể nhiều): Số ngày + Điểm tham quan + Hoạt động | |
+| Thêm nhà cung cấp (có thể nhiều): Tên + Loại + Liên hệ + Ghi chú | |
+| Upload ảnh tour chính | |
+| Upload ảnh chi tiết (có thể nhiều) | |
+| Nhấn nút "Lưu" | |
+| | Nhận dữ liệu POST |
+| | Validate: Kiểm tra tên tour, danh mục, mô tả, giá > 0 |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi và dữ liệu cũ |
+| | **Nếu hợp lệ**: |
 | | - Upload ảnh tour chính → Lưu vào `uploads/tours/` |
 | | - Upload ảnh chi tiết → Lưu vào `uploads/tours/` |
 | | - Tạo record mới trong bảng `tour` |
@@ -47,9 +56,11 @@
 | | - Lưu lịch trình vào bảng `tour_lich_trinh` |
 | | - Lưu nhà cung cấp vào bảng `tour_nha_cung_cap` |
 | | - Lưu ảnh chi tiết vào bảng `tour_anh` |
-| | 14. **Thành công** → Lưu thông báo success vào session → Redirect về danh sách tour |
-| | 15. **Thất bại** → Lưu thông báo error → Redirect về form tạo |
-| 10. Thấy danh sách tour với thông báo thành công | |
+| | **Điểm quyết định: Lưu thành công?** |
+| | **Nếu thất bại** → Lưu thông báo error vào session → Redirect về form tạo |
+| | **Nếu thành công** → Lưu thông báo success vào session → Redirect về danh sách tour |
+| Thấy danh sách tour với thông báo thành công | |
+| **Kết thúc** | |
 
 ---
 
@@ -57,20 +68,24 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào danh sách tour | |
-| 2. Chọn tour cần sửa → Nhấn "Sửa" | 3. Kiểm tra quyền Admin |
-| | 4. Lấy thông tin tour từ database theo ID |
-| | 5. Lấy danh sách chính sách, lịch trình, nhà cung cấp, ảnh chi tiết |
-| | 6. Hiển thị form với dữ liệu hiện có |
-| 4. Sửa thông tin cần thiết | |
-| 5. Có thể xóa chính sách, lịch trình, nhà cung cấp cũ | |
-| 6. Có thể thêm chính sách, lịch trình, nhà cung cấp mới | |
-| 7. Có thể xóa ảnh chi tiết (chọn checkbox) | |
-| 8. Có thể thêm ảnh chi tiết mới | |
-| 9. Nhấn nút "Cập nhật" | 10. Nhận dữ liệu POST (có `id`) |
-| | 11. Validate dữ liệu |
-| | 12. **Nếu có lỗi** → Hiển thị form với lỗi → Quay lại bước 4 |
-| | 13. **Nếu hợp lệ**: |
+| **Bắt đầu** | |
+| Vào danh sách tour | |
+| Chọn tour cần sửa → Nhấn "Sửa" | |
+| | Kiểm tra quyền Admin |
+| | Lấy thông tin tour từ database theo ID |
+| | Lấy danh sách chính sách, lịch trình, nhà cung cấp, ảnh chi tiết |
+| | Hiển thị form với dữ liệu hiện có |
+| Sửa thông tin cần thiết | |
+| Có thể xóa chính sách, lịch trình, nhà cung cấp cũ | |
+| Có thể thêm chính sách, lịch trình, nhà cung cấp mới | |
+| Có thể xóa ảnh chi tiết (chọn checkbox) | |
+| Có thể thêm ảnh chi tiết mới | |
+| Nhấn nút "Cập nhật" | |
+| | Nhận dữ liệu POST (có `id`) |
+| | Validate dữ liệu |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi |
+| | **Nếu hợp lệ**: |
 | | - Nếu có upload ảnh mới → Upload và lưu |
 | | - Nếu không → Giữ ảnh cũ |
 | | - Cập nhật bảng `tour` |
@@ -79,9 +94,11 @@
 | | - Xóa tất cả nhà cung cấp cũ → Lưu mới vào `tour_nha_cung_cap` |
 | | - Xóa ảnh chi tiết được chọn (từ `tour_anh`) |
 | | - Thêm ảnh chi tiết mới (nếu có) |
-| | 14. **Thành công** → Redirect về danh sách tour |
-| | 15. **Thất bại** → Redirect về form sửa |
-| 10. Thấy danh sách tour với thông báo | |
+| | **Điểm quyết định: Cập nhật thành công?** |
+| | **Nếu thất bại** → Redirect về form sửa với thông báo lỗi |
+| | **Nếu thành công** → Redirect về danh sách tour với thông báo thành công |
+| Thấy danh sách tour với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -89,17 +106,22 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào danh sách tour | |
-| 2. Chọn tour cần xóa → Nhấn "Xóa" | 3. Kiểm tra quyền Admin |
-| | 4. Nhận POST request với `id` |
-| 3. Xác nhận xóa (trong popup) | 5. Kiểm tra tour có tồn tại không |
-| | 6. Kiểm tra tour có đang được sử dụng trong booking không |
-| | 7. **Nếu có** → Trả về lỗi "Không thể xóa tour này vì đang được sử dụng" |
-| | 8. **Nếu không**: |
+| **Bắt đầu** | |
+| Vào danh sách tour | |
+| Chọn tour cần xóa → Nhấn "Xóa" | |
+| | Kiểm tra quyền Admin |
+| | Nhận POST request với `id` |
+| | Kiểm tra tour có tồn tại không |
+| | Kiểm tra tour có đang được sử dụng trong booking không |
+| | **Điểm quyết định: Có thể xóa?** |
+| | **Nếu không thể xóa** → Lưu thông báo lỗi "Không thể xóa tour này vì đang được sử dụng" |
+| | **Nếu có thể xóa**: |
 | | - Xóa tour trong bảng `tour` |
 | | - Xóa các record liên quan (chính sách, lịch trình, nhà cung cấp, ảnh) |
-| | 9. Redirect về danh sách tour với thông báo |
-| 4. Thấy danh sách tour với thông báo | |
+| | - Lưu thông báo thành công |
+| | Redirect về danh sách tour với thông báo |
+| Thấy danh sách tour với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -107,21 +129,24 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào menu "Quản lý Booking" → "Thêm booking mới" | |
-| 2. Hệ thống hiển thị form | 2. Kiểm tra quyền Admin |
-| | 3. Lấy danh sách tour từ database |
-| | 4. Lấy danh sách HDV từ database |
-| | 5. Hiển thị form với dropdown tour và HDV |
-| 3. Điền form: Chọn tour, Loại khách, Tên người đặt, Số lượng, Thời gian tour, Liên hệ | |
-| 4. Thêm yêu cầu đặc biệt (nếu có) | |
-| 5. Phân công HDV (nếu có) | |
-| 6. Thêm khách hàng (có thể thêm sau) | |
-| 7. Thiết lập lịch khởi hành: Ngày giờ xuất phát, Điểm tập trung, Thời gian kết thúc (có thể thêm sau) | |
-| 8. Upload file Excel danh sách khách (tùy chọn) | |
-| 9. Nhấn nút "Lưu" | 10. Nhận dữ liệu POST |
-| | 11. Validate: tour_id, tên người đặt, số lượng > 0, thời gian tour, liên hệ |
-| | 12. **Nếu có lỗi** → Hiển thị form với lỗi → Quay lại bước 3 |
-| | 13. **Nếu hợp lệ**: |
+| **Bắt đầu** | |
+| Vào menu "Quản lý Booking" → "Thêm booking mới" | |
+| | Kiểm tra quyền Admin |
+| | Lấy danh sách tour từ database |
+| | Lấy danh sách HDV từ database |
+| | Hiển thị form với dropdown tour và HDV |
+| Điền form: Chọn tour, Loại khách, Tên người đặt, Số lượng, Thời gian tour, Liên hệ | |
+| Thêm yêu cầu đặc biệt (nếu có) | |
+| Phân công HDV (nếu có) | |
+| Thêm khách hàng (có thể thêm sau) | |
+| Thiết lập lịch khởi hành: Ngày giờ xuất phát, Điểm tập trung, Thời gian kết thúc (có thể thêm sau) | |
+| Upload file Excel danh sách khách (tùy chọn) | |
+| Nhấn nút "Lưu" | |
+| | Nhận dữ liệu POST |
+| | Validate: tour_id, tên người đặt, số lượng > 0, thời gian tour, liên hệ |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi |
+| | **Nếu hợp lệ**: |
 | | - Tạo record mới trong bảng `booking` |
 | | - Lấy `booking_id` vừa tạo |
 | | - Nếu có HDV → Lưu vào bảng `booking_hdv` |
@@ -129,9 +154,11 @@
 | | - Nếu có lịch khởi hành → Lưu vào bảng `lich_khoi_hanh` |
 | | - Nếu có yêu cầu đặc biệt → Tạo dịch vụ trong `booking_dich_vu` |
 | | - Nếu có file Excel → Upload và lưu vào `uploads/guest_lists/` |
-| | 14. **Thành công** → Redirect về danh sách booking |
-| | 15. **Thất bại** → Redirect về form tạo |
-| 10. Thấy danh sách booking với thông báo | |
+| | **Điểm quyết định: Lưu thành công?** |
+| | **Nếu thất bại** → Redirect về form tạo với thông báo lỗi |
+| | **Nếu thành công** → Redirect về danh sách booking với thông báo thành công |
+| Thấy danh sách booking với thông báo thành công | |
+| **Kết thúc** | |
 
 ---
 
@@ -139,25 +166,29 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào trang sửa booking | |
-| 2. Chọn tab "Danh sách khách" | |
-| 3. Chọn file Excel (định dạng: Họ tên, Giới tính, Năm sinh, Số giấy tờ, Yêu cầu) | |
-| 4. Nhấn nút "Import" | 5. Nhận POST request với `booking_id` và file |
-| | 6. Kiểm tra file có tồn tại và hợp lệ không (CSV, XLS, XLSX) |
-| | 7. **Nếu không hợp lệ** → Hiển thị lỗi → Quay lại bước 3 |
-| | 8. **Nếu hợp lệ**: |
+| **Bắt đầu** | |
+| Vào trang sửa booking | |
+| Chọn tab "Danh sách khách" | |
+| Chọn file Excel (định dạng: Họ tên, Giới tính, Năm sinh, Số giấy tờ, Yêu cầu) | |
+| Nhấn nút "Import" | |
+| | Nhận POST request với `booking_id` và file |
+| | Kiểm tra file có tồn tại và hợp lệ không (CSV, XLS, XLSX) |
+| | **Điểm quyết định: File hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị lỗi "File không hợp lệ" |
+| | **Nếu hợp lệ**: |
 | | - Upload file tạm |
 | | - Đọc file Excel bằng PHPSpreadsheet (bỏ dòng header, bắt đầu từ dòng 2) |
-| | 9. **Với mỗi dòng trong file**: |
+| | **Vòng lặp: Với mỗi dòng trong file**: |
 | | - Lấy: Họ tên, Giới tính, Năm sinh, Số giấy tờ, Yêu cầu |
 | | - Validate: Họ tên không được rỗng |
 | | - **Nếu hợp lệ** → Tạo record trong `booking_khach` → Đếm thành công |
 | | - **Nếu không hợp lệ** → Ghi lại lỗi → Đếm thất bại |
-| | 10. Xóa file tạm |
-| | 11. **Nếu có thành công** → Lưu thông báo "Import thành công X khách hàng" |
-| | 12. **Nếu có lỗi** → Lưu thông báo lỗi chi tiết |
-| | 13. Redirect về trang chi tiết booking |
-| 5. Thấy danh sách khách đã được import | |
+| | - Xóa file tạm |
+| | - **Nếu có thành công** → Lưu thông báo "Import thành công X khách hàng" |
+| | - **Nếu có lỗi** → Lưu thông báo lỗi chi tiết |
+| | Redirect về trang chi tiết booking |
+| Thấy danh sách khách đã được import | |
+| **Kết thúc** | |
 
 ---
 
@@ -165,15 +196,18 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào trang chi tiết booking | |
-| 2. Chọn tab "Điểm danh" | |
-| 3. Nhấn nút "Xuất Excel" | 4. Lấy danh sách khách từ `booking_khach` theo `booking_id` |
-| | 5. Lấy thông tin điểm danh từ `diem_danh_khach` |
-| | 6. Tạo file Excel bằng PHPSpreadsheet: |
+| **Bắt đầu** | |
+| Vào trang chi tiết booking | |
+| Chọn tab "Điểm danh" | |
+| Nhấn nút "Xuất Excel" | |
+| | Lấy danh sách khách từ `booking_khach` theo `booking_id` |
+| | Lấy thông tin điểm danh từ `diem_danh_khach` |
+| | Tạo file Excel bằng PHPSpreadsheet: |
 | | - Header: STT, Họ tên, Giới tính, Năm sinh, Số giấy tờ, Trạng thái điểm danh |
 | | - Dữ liệu: Mỗi khách một dòng với thông tin tương ứng |
-| | 7. Trả về file Excel để download |
-| 4. File Excel được tải về máy | |
+| | Trả về file Excel để download |
+| File Excel được tải về máy | |
+| **Kết thúc** | |
 
 ---
 
@@ -181,14 +215,17 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Đăng nhập với tài khoản HDV | |
-| 2. Vào menu "Booking của tôi" | 3. Kiểm tra đăng nhập và quyền HDV |
-| | 4. Lấy `user_id` từ session |
-| | 5. Tìm `hdv_id` từ bảng `hdv` theo `tai_khoan_id` |
-| | 6. Query booking từ `booking_hdv` với `hdv_id` này |
-| | 7. Lấy thông tin tour, lịch khởi hành cho mỗi booking |
-| | 8. Hiển thị danh sách booking |
-| 3. Thấy danh sách booking được phân công | |
+| **Bắt đầu** | |
+| Đăng nhập với tài khoản HDV | |
+| Vào menu "Booking của tôi" | |
+| | Kiểm tra đăng nhập và quyền HDV |
+| | Lấy `user_id` từ session |
+| | Tìm `hdv_id` từ bảng `hdv` theo `tai_khoan_id` |
+| | Query booking từ `booking_hdv` với `hdv_id` này |
+| | Lấy thông tin tour, lịch khởi hành cho mỗi booking |
+| | Hiển thị danh sách booking |
+| Thấy danh sách booking được phân công | |
+| **Kết thúc** | |
 
 ---
 
@@ -196,23 +233,29 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Vào chi tiết booking được phân công | |
-| 2. Chọn tab "Điểm danh" | |
-| 3. Chọn khách cần check-in | |
-| 4. Chọn trạng thái: Đã đến / Vắng / Vắng mặt / Trễ | |
-| 5. Nhập ghi chú (nếu có) | |
-| 6. Nhấn nút "Lưu điểm danh" | 7. Nhận POST request: `booking_id`, `lich_khoi_hanh_id`, `booking_khach_id`, `trang_thai`, `ghi_chu` |
-| | 8. Kiểm tra quyền HDV và booking có thuộc HDV này không |
-| | 9. **Nếu không có quyền** → Hiển thị lỗi → Quay lại bước 1 |
-| | 10. Validate: `booking_id`, `lich_khoi_hanh_id`, `booking_khach_id`, `trang_thai` hợp lệ |
-| | 11. **Nếu chưa có `lich_khoi_hanh_id`** → Tạo mới trong `lich_khoi_hanh` |
-| | 12. Gọi `Booking::upsertDiemDanh()`: |
-| | - Kiểm tra đã có điểm danh chưa (trong `diem_danh_khach`) |
-| | - **Nếu có** → Cập nhật record |
-| | - **Nếu chưa** → Tạo mới record |
-| | 13. **Thành công** → Lưu thông báo success → Redirect về trang chi tiết booking |
-| | 14. **Thất bại** → Lưu thông báo error → Redirect về trang chi tiết booking |
-| 7. Thấy trang chi tiết booking với thông báo | |
+| **Bắt đầu** | |
+| Vào chi tiết booking được phân công | |
+| Chọn tab "Điểm danh" | |
+| Chọn khách cần check-in | |
+| Chọn trạng thái: Đã đến / Vắng / Vắng mặt / Trễ | |
+| Nhập ghi chú (nếu có) | |
+| Nhấn nút "Lưu điểm danh" | |
+| | Nhận POST request: `booking_id`, `lich_khoi_hanh_id`, `booking_khach_id`, `trang_thai`, `ghi_chu` |
+| | Kiểm tra quyền HDV và booking có thuộc HDV này không |
+| | **Điểm quyết định: Có quyền?** |
+| | **Nếu không có quyền** → Hiển thị lỗi "Không có quyền truy cập" |
+| | **Nếu có quyền**: |
+| | - Validate: `booking_id`, `lich_khoi_hanh_id`, `booking_khach_id`, `trang_thai` hợp lệ |
+| | - **Nếu chưa có `lich_khoi_hanh_id`** → Tạo mới trong `lich_khoi_hanh` |
+| | - Gọi `Booking::upsertDiemDanh()`: |
+| |   - Kiểm tra đã có điểm danh chưa (trong `diem_danh_khach`) |
+| |   - **Nếu có** → Cập nhật record |
+| |   - **Nếu chưa** → Tạo mới record |
+| | **Điểm quyết định: Lưu thành công?** |
+| | **Nếu thất bại** → Lưu thông báo error → Redirect về trang chi tiết booking |
+| | **Nếu thành công** → Lưu thông báo success → Redirect về trang chi tiết booking |
+| Thấy trang chi tiết booking với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -220,21 +263,28 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Vào chi tiết booking | |
-| 2. Chọn "Nhật ký tour" | |
-| 3. Nhấn nút "Thêm nhật ký" | 4. Kiểm tra quyền HDV |
-| | 5. Lấy thông tin booking |
-| | 6. Hiển thị form tạo nhật ký |
-| 4. Điền form: Ngày giờ, Nội dung, Đánh giá HDV | |
-| 5. Nhấn nút "Lưu" | 6. Nhận POST request: `booking_id`, `ngay_gio`, `noi_dung`, `danh_gia_hdv` |
-| | 7. Kiểm tra quyền HDV |
-| | 8. Validate: `noi_dung` không được rỗng |
-| | 9. **Nếu có lỗi** → Hiển thị form với lỗi → Quay lại bước 4 |
-| | 10. **Nếu `ngay_gio` rỗng** → Lấy thời gian hiện tại |
-| | 11. Tạo record mới trong `nhat_ky_tour` |
-| | 12. **Thành công** → Redirect về danh sách nhật ký |
-| | 13. **Thất bại** → Redirect về form tạo với lỗi |
-| 6. Thấy danh sách nhật ký với thông báo | |
+| **Bắt đầu** | |
+| Vào chi tiết booking | |
+| Chọn "Nhật ký tour" | |
+| Nhấn nút "Thêm nhật ký" | |
+| | Kiểm tra quyền HDV |
+| | Lấy thông tin booking |
+| | Hiển thị form tạo nhật ký |
+| Điền form: Ngày giờ, Nội dung, Đánh giá HDV | |
+| Nhấn nút "Lưu" | |
+| | Nhận POST request: `booking_id`, `ngay_gio`, `noi_dung`, `danh_gia_hdv` |
+| | Kiểm tra quyền HDV |
+| | Validate: `noi_dung` không được rỗng |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi |
+| | **Nếu hợp lệ**: |
+| | - **Nếu `ngay_gio` rỗng** → Lấy thời gian hiện tại |
+| | - Tạo record mới trong `nhat_ky_tour` |
+| | **Điểm quyết định: Lưu thành công?** |
+| | **Nếu thất bại** → Redirect về form tạo với lỗi |
+| | **Nếu thành công** → Redirect về danh sách nhật ký với thông báo thành công |
+| Thấy danh sách nhật ký với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -242,18 +292,24 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Vào danh sách nhật ký tour | |
-| 2. Chọn nhật ký cần sửa → Nhấn "Sửa" | 3. Kiểm tra quyền HDV |
-| | 4. Lấy thông tin nhật ký từ database theo ID |
-| | 5. Hiển thị form với dữ liệu hiện có |
-| 3. Sửa nội dung nhật ký | |
-| 4. Nhấn nút "Cập nhật" | 5. Nhận POST request với `id` |
-| | 6. Validate: `noi_dung` không được rỗng |
-| | 7. **Nếu có lỗi** → Hiển thị form với lỗi → Quay lại bước 3 |
-| | 8. **Nếu hợp lệ** → Cập nhật record trong `nhat_ky_tour` |
-| | 9. **Thành công** → Redirect về danh sách nhật ký |
-| | 10. **Thất bại** → Redirect về form sửa với lỗi |
-| 5. Thấy danh sách nhật ký với thông báo | |
+| **Bắt đầu** | |
+| Vào danh sách nhật ký tour | |
+| Chọn nhật ký cần sửa → Nhấn "Sửa" | |
+| | Kiểm tra quyền HDV |
+| | Lấy thông tin nhật ký từ database theo ID |
+| | Hiển thị form với dữ liệu hiện có |
+| Sửa nội dung nhật ký | |
+| Nhấn nút "Cập nhật" | |
+| | Nhận POST request với `id` |
+| | Validate: `noi_dung` không được rỗng |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi |
+| | **Nếu hợp lệ** → Cập nhật record trong `nhat_ky_tour` |
+| | **Điểm quyết định: Cập nhật thành công?** |
+| | **Nếu thất bại** → Redirect về form sửa với thông báo lỗi |
+| | **Nếu thành công** → Redirect về danh sách nhật ký với thông báo thành công |
+| Thấy danh sách nhật ký với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -261,13 +317,20 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Vào danh sách nhật ký tour | |
-| 2. Chọn nhật ký cần xóa → Nhấn "Xóa" | 3. Kiểm tra quyền HDV |
-| | 4. Nhận POST request với `id` |
-| 3. Xác nhận xóa (trong popup) | 5. Lấy nhật ký từ database |
-| | 6. Xóa record trong `nhat_ky_tour` |
-| | 7. Redirect về danh sách nhật ký với thông báo |
-| 4. Thấy danh sách nhật ký với thông báo | |
+| **Bắt đầu** | |
+| Vào danh sách nhật ký tour | |
+| Chọn nhật ký cần xóa → Nhấn "Xóa" | |
+| | Kiểm tra quyền HDV |
+| | Nhận POST request với `id` |
+| Xác nhận xóa (trong popup) | |
+| | Lấy nhật ký từ database |
+| | Xóa record trong `nhat_ky_tour` |
+| | **Điểm quyết định: Xóa thành công?** |
+| | **Nếu thất bại** → Lưu thông báo lỗi |
+| | **Nếu thành công** → Lưu thông báo thành công |
+| | Redirect về danh sách nhật ký với thông báo |
+| Thấy danh sách nhật ký với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -275,17 +338,23 @@
 
 | **HDV** | **HỆ THỐNG** |
 |---------|--------------|
-| 1. Vào chi tiết booking | |
-| 2. Tìm phần "Yêu cầu đặc biệt" | |
-| 3. Sửa nội dung | |
-| 4. Nhấn nút "Cập nhật" | 5. Nhận POST request: `booking_id`, `yeu_cau_dac_biet` |
-| | 6. Kiểm tra quyền HDV và booking có thuộc HDV này không |
-| | 7. **Nếu không có quyền** → Hiển thị lỗi → Quay lại bước 1 |
-| | 8. Lấy booking từ database |
-| | 9. Cập nhật trường `yeu_cau_dac_biet` trong bảng `booking` |
-| | 10. **Thành công** → Redirect về trang chi tiết booking |
-| | 11. **Thất bại** → Redirect về trang chi tiết booking với lỗi |
-| 5. Thấy trang chi tiết booking với thông báo | |
+| **Bắt đầu** | |
+| Vào chi tiết booking | |
+| Tìm phần "Yêu cầu đặc biệt" | |
+| Sửa nội dung | |
+| Nhấn nút "Cập nhật" | |
+| | Nhận POST request: `booking_id`, `yeu_cau_dac_biet` |
+| | Kiểm tra quyền HDV và booking có thuộc HDV này không |
+| | **Điểm quyết định: Có quyền?** |
+| | **Nếu không có quyền** → Hiển thị lỗi "Không có quyền truy cập" |
+| | **Nếu có quyền**: |
+| | - Lấy booking từ database |
+| | - Cập nhật trường `yeu_cau_dac_biet` trong bảng `booking` |
+| | **Điểm quyết định: Cập nhật thành công?** |
+| | **Nếu thất bại** → Redirect về trang chi tiết booking với lỗi |
+| | **Nếu thành công** → Redirect về trang chi tiết booking với thông báo thành công |
+| Thấy trang chi tiết booking với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -293,30 +362,36 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào danh sách booking | |
-| 2. Chọn booking cần sửa → Nhấn "Sửa" | 3. Kiểm tra quyền Admin |
-| | 4. Lấy thông tin booking từ database theo ID |
-| | 5. Lấy danh sách tour, HDV, khách, lịch khởi hành, điểm danh |
-| | 6. Hiển thị form với dữ liệu hiện có |
-| 3. Sửa thông tin booking | |
-| 4. Cập nhật HDV (nếu có) | |
-| 5. Cập nhật danh sách khách | |
-| 6. Cập nhật lịch khởi hành | |
-| 7. Cập nhật điểm danh (nếu có) | |
-| 8. Cập nhật dịch vụ | |
-| 9. Nhấn nút "Cập nhật" | 10. Nhận dữ liệu POST với `id` |
-| | 11. Validate dữ liệu |
-| | 12. **Nếu có lỗi** → Hiển thị form với lỗi → Quay lại bước 3 |
-| | 13. **Nếu hợp lệ**: |
+| **Bắt đầu** | |
+| Vào danh sách booking | |
+| Chọn booking cần sửa → Nhấn "Sửa" | |
+| | Kiểm tra quyền Admin |
+| | Lấy thông tin booking từ database theo ID |
+| | Lấy danh sách tour, HDV, khách, lịch khởi hành, điểm danh |
+| | Hiển thị form với dữ liệu hiện có |
+| Sửa thông tin booking | |
+| Cập nhật HDV (nếu có) | |
+| Cập nhật danh sách khách | |
+| Cập nhật lịch khởi hành | |
+| Cập nhật điểm danh (nếu có) | |
+| Cập nhật dịch vụ | |
+| Nhấn nút "Cập nhật" | |
+| | Nhận dữ liệu POST với `id` |
+| | Validate dữ liệu |
+| | **Điểm quyết định: Dữ liệu hợp lệ?** |
+| | **Nếu không hợp lệ** → Hiển thị form với lỗi |
+| | **Nếu hợp lệ**: |
 | | - Cập nhật bảng `booking` |
 | | - Đồng bộ HDV (xóa cũ, thêm mới nếu có) |
 | | - Đồng bộ khách (cập nhật hoặc thêm mới) |
 | | - Cập nhật lịch khởi hành |
 | | - Cập nhật điểm danh |
 | | - Đồng bộ dịch vụ (xóa cũ, thêm mới) |
-| | 14. **Thành công** → Redirect về danh sách booking |
-| | 15. **Thất bại** → Redirect về form sửa |
-| 10. Thấy danh sách booking với thông báo | |
+| | **Điểm quyết định: Cập nhật thành công?** |
+| | **Nếu thất bại** → Redirect về form sửa với thông báo lỗi |
+| | **Nếu thành công** → Redirect về danh sách booking với thông báo thành công |
+| Thấy danh sách booking với thông báo | |
+| **Kết thúc** | |
 
 ---
 
@@ -324,26 +399,43 @@
 
 | **ADMIN** | **HỆ THỐNG** |
 |-----------|--------------|
-| 1. Vào danh sách booking | |
-| 2. Chọn booking cần xóa → Nhấn "Xóa" | 3. Kiểm tra quyền Admin |
-| | 4. Nhận POST request với `id` |
-| 3. Xác nhận xóa (trong popup) | 5. Kiểm tra booking có tồn tại không |
-| | 6. Xóa booking trong bảng `booking` |
-| | 7. Xóa các record liên quan (khách, HDV, lịch khởi hành, điểm danh, dịch vụ, nhật ký) |
-| | 8. Xóa file Excel danh sách khách (nếu có) |
-| | 9. Redirect về danh sách booking với thông báo |
-| 4. Thấy danh sách booking với thông báo | |
+| **Bắt đầu** | |
+| Vào danh sách booking | |
+| Chọn booking cần xóa → Nhấn "Xóa" | |
+| | Kiểm tra quyền Admin |
+| | Nhận POST request với `id` |
+| Xác nhận xóa (trong popup) | |
+| | Kiểm tra booking có tồn tại không |
+| | Xóa booking trong bảng `booking` |
+| | Xóa các record liên quan (khách, HDV, lịch khởi hành, điểm danh, dịch vụ, nhật ký) |
+| | Xóa file Excel danh sách khách (nếu có) |
+| | **Điểm quyết định: Xóa thành công?** |
+| | **Nếu thất bại** → Lưu thông báo lỗi |
+| | **Nếu thành công** → Lưu thông báo thành công |
+| | Redirect về danh sách booking với thông báo |
+| Thấy danh sách booking với thông báo | |
+| **Kết thúc** | |
 
 ---
 
-## GHI CHÚ
+## GHI CHÚ VỀ BIỂU ĐỒ
 
-- Tất cả các luồng đều bắt đầu từ người dùng (Admin/HDV) thực hiện hành động
-- Hệ thống luôn kiểm tra quyền trước khi xử lý
-- Hệ thống luôn validate dữ liệu trước khi lưu vào database
-- Có vòng lặp xử lý khi import Excel (xử lý từng dòng)
-- Có điều kiện rẽ nhánh: thành công/thất bại, có lỗi/không lỗi
-- Các thao tác database: SELECT, INSERT, UPDATE, DELETE
-- Upload file: Kiểm tra định dạng → Upload → Lưu đường dẫn
-- Session: Lưu thông báo success/error để hiển thị sau redirect
+### Cấu trúc:
+- **2 Swimlanes (Làn bơi):** Admin/HDV và Hệ thống
+- **Bắt đầu:** Nút tròn đen đặc (Initial Node) trong làn bơi Admin/HDV
+- **Kết thúc:** Nút tròn đen có viền (Final Node) sau hoạt động cuối cùng
 
+### Các thành phần:
+1. **Hoạt động (Activity):** Các bước thực hiện trong mỗi làn bơi
+2. **Điểm quyết định (Decision Node):** Hình thoi với các nhánh:
+   - Thành công / Thất bại
+   - Hợp lệ / Không hợp lệ
+   - Có quyền / Không có quyền
+3. **Vòng lặp (Loop):** Xử lý từng dòng trong file Excel
+4. **Luồng (Flow):** Mũi tên nối các hoạt động, thể hiện thứ tự thực hiện
+
+### Quy tắc:
+- Mỗi hành động của Admin/HDV sẽ kích hoạt phản hồi tương ứng từ Hệ thống
+- Hệ thống luôn kiểm tra quyền và validate dữ liệu trước khi xử lý
+- Có các điểm quyết định rõ ràng để xử lý các trường hợp thành công/thất bại
+- Luồng có thể quay lại (loop) khi có lỗi validation
